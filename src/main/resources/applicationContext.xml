@@ -12,7 +12,6 @@
 		http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
 
 	<!-- SOAP协议=html+http，需要调用者生成响应的客户端代码，然后调用方法，才有数据返回，不灵活 -->
-
 	<jaxws:endpoint address="/hello" implementor="com.xywei.test.hello.Helloworld" />
 
 	<!-- 发布 server soap协议服务 -->
