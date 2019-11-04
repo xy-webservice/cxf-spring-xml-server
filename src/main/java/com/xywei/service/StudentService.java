@@ -2,6 +2,7 @@ package com.xywei.service;
 
 import java.util.List;
 
+import javax.jws.WebParam;
 import javax.jws.WebService;
 
 import com.xywei.domain.Student;
@@ -10,6 +11,6 @@ import com.xywei.domain.Student;
 public interface StudentService {
 
 	Student findById();
-	
-	List<Student> findByIdAndAge(String id, Integer age);
+
+	List<Student> findByIdAndAge(@WebParam(name = "id") String id, @WebParam(name = "age") Integer age);
 }
