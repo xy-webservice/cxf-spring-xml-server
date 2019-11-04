@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://cxf.apache.org/configuration/beans" xmlns:configuration="http://cxf.apache.org/transports/http/configuration"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:core="http://cxf.apache.org/core" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://cxf.apache.org/configuration/beans http://cxf.apache.org/schemas/configuration/cxf-beans.xsd
+		http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/wsdl/http-conf.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+		http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs-common.xsd
+		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+	<!-- SOAP协议=html+http，需要调用者生成响应的客户端代码，然后调用方法，才有数据返回，不灵活 -->
+
+	<jaxws:endpoint address="/hello" implementor="com.xywei.test.hello.Helloworld" />
+
+	<!-- 发布 server soap协议服务 -->
+	<jaxws:server id="student_xml" address="/student" serviceClass="com.xywei.service.StudentService">
+		<jaxws:serviceBean>
+			<ref bean="studentServiceImpl" />
+		</jaxws:serviceBean>
+		<jaxws:inInterceptors>
+			<ref bean="loggingInInterceptor" />
+		</jaxws:inInterceptors>
+		<jaxws:outInterceptors>
+			<ref bean="loggingOutInterceptor" />
+		</jaxws:outInterceptors>
+	</jaxws:server>
+
+	<bean id="loggingInInterceptor" class="org.apache.cxf.ext.logging.LoggingInInterceptor"></bean>
+	<bean id="loggingOutInterceptor" class="org.apache.cxf.ext.logging.LoggingOutInterceptor"></bean>
+
+	<bean id="studentServiceImpl" class="com.xywei.service.impl.StudentServiceImpl"></bean>
+</beans>
